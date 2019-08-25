@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 
 public class EventMgr {
-    private Dictionary<int, Delegate> _events = new Dictionary<int, Delegate>();
+    protected Dictionary<int, Delegate> _events = new Dictionary<int, Delegate>();
 
     #region 0 param event
     public void RegisterAction(int name, Action callback) {
