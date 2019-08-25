@@ -1,411 +1,277 @@
 ﻿using System.Collections.Generic;
 using System;
 using UnityEngine;
-using System.Collections;
 
-public enum EventName
-{
-    OnInputTouched,
-    OnFire,
-}
-
-
-
-public class EventMgr
-{
+public class EventMgr {
     private Dictionary<int, Delegate> _events = new Dictionary<int, Delegate>();
 
     #region 0 param event
-    public void RegisterAction(EventName name, Action callback)
-    {
-        int intName = (int)name;
+    public void RegisterAction(int name, Action callback) {
         Delegate action = null;
-        _events.TryGetValue(intName, out action);
-        if (action != null)
-        {
+        _events.TryGetValue(name, out action);
+        if (action != null) {
             Action func = action as Action;
-            if (func != null)
-            {
+            if (func != null) {
                 func += callback;
-                _events[intName] = func;
-            }
-            else
-            {
+                _events[name] = func;
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
-            _events[intName] = callback;
+        } else {
+            _events[name] = callback;
         }
 
     }
 
-    public void UnRegisterAction(EventName name, Action callback)
-    {
-        int intName = (int)name;
+    public void UnRegisterAction(int name, Action callback) {
         Delegate action = null;
-        _events.TryGetValue(intName, out action);
-        if (action != null)
-        {
+        _events.TryGetValue(name, out action);
+        if (action != null) {
             Action func = action as Action;
-            if (func != null)
-            {
+            if (func != null) {
                 func -= callback;
-                _events[intName] = func;
-            }
-            else
-            {
+                _events[name] = func;
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
+        } else {
             ThrowEventAlreadyUnRegsisteredException(name);
         }
 
     }
 
-    public void TriggerAction(EventName name)
-    {
-        int intName = (int)name;
+    public void TriggerAction(int name) {
         Delegate callback = null;
-        _events.TryGetValue(intName, out callback);
-        if (callback != null)
-        {
+        _events.TryGetValue(name, out callback);
+        if (callback != null) {
             Action func = callback as Action;
-            if (func != null)
-            {
+            if (func != null) {
                 func();
-            }
-            else
-            {
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
+        } else {
             ThrowEventNotFindException(name);
         }
     }
     #endregion
 
     #region 1 param event
-    public void RegisterAction<T>(EventName name, Action<T> callback)
-    {
-        int intName = (int)name;
+    public void RegisterAction<T>(int name, Action<T> callback) {
         Delegate action = null;
-        _events.TryGetValue(intName, out action);
-        if (action != null)
-        {
+        _events.TryGetValue(name, out action);
+        if (action != null) {
             Action<T> func = action as Action<T>;
-            if (func != null)
-            {
+            if (func != null) {
                 func += callback;
-                _events[intName] = func;
-            }
-            else
-            {
+                _events[name] = func;
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
-            _events[intName] = callback;
+        } else {
+            _events[name] = callback;
         }
     }
 
-    public void UnRegisterAction<T>(EventName name, Action<T> callback)
-    {
-        int intName = (int)name;
+    public void UnRegisterAction<T>(int name, Action<T> callback) {
         Delegate action = null;
-        _events.TryGetValue(intName, out action);
-        if (action != null)
-        {
+        _events.TryGetValue(name, out action);
+        if (action != null) {
             Action<T> func = action as Action<T>;
-            if (func != null)
-            {
+            if (func != null) {
                 func -= callback;
-                _events[intName] = func;
-            }
-            else
-            {
+                _events[name] = func;
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
+        } else {
             ThrowEventAlreadyUnRegsisteredException(name);
         }
 
     }
 
-    public void TriggerAction<T>(EventName name, T arg1)
-    {
-        int intName = (int)name;
+    public void TriggerAction<T>(int name, T arg1) {
         Delegate callback = null;
-        _events.TryGetValue(intName, out callback);
-        if (callback != null)
-        {
+        _events.TryGetValue(name, out callback);
+        if (callback != null) {
             Action<T> func = callback as Action<T>;
-            if (func != null)
-            {
+            if (func != null) {
                 func(arg1);
-            }
-            else
-            {
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
+        } else {
             ThrowEventNotFindException(name);
         }
     }
     #endregion
 
     #region 2 params event
-    public void RegisterAction<T, U>(EventName name, Action<T, U> callback)
-    {
-        int intName = (int)name;
+    public void RegisterAction<T, U>(int name, Action<T, U> callback) {
         Delegate action = null;
-        _events.TryGetValue(intName, out action);
-        if (action != null)
-        {
+        _events.TryGetValue(name, out action);
+        if (action != null) {
             Action<T, U> func = action as Action<T, U>;
-            if (func != null)
-            {
+            if (func != null) {
                 func += callback;
-                _events[intName] = func;
-            }
-            else
-            {
+                _events[name] = func;
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
-            _events[intName] = callback;
+        } else {
+            _events[name] = callback;
         }
     }
 
-    public void UnRegisterAction<T, U>(EventName name, Action<T, U> callback)
-    {
-        int intName = (int)name;
+    public void UnRegisterAction<T, U>(int name, Action<T, U> callback) {
         Delegate action = null;
-        _events.TryGetValue(intName, out action);
-        if (action != null)
-        {
+        _events.TryGetValue(name, out action);
+        if (action != null) {
             Action<T, U> func = action as Action<T, U>;
-            if (func != null)
-            {
+            if (func != null) {
                 func -= callback;
-                _events[intName] = func;
-            }
-            else
-            {
+                _events[name] = func;
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
+        } else {
             ThrowEventAlreadyUnRegsisteredException(name);
         }
 
     }
 
-    public void TriggerAction<T, U>(EventName name, T arg1, U arg2)
-    {
-        int intName = (int)name;
+    public void TriggerAction<T, U>(int name, T arg1, U arg2) {
         Delegate callback = null;
-        _events.TryGetValue(intName, out callback);
-        if (callback != null)
-        {
+        _events.TryGetValue(name, out callback);
+        if (callback != null) {
             Action<T, U> func = callback as Action<T, U>;
-            if (func != null)
-            {
+            if (func != null) {
                 func(arg1, arg2);
-            }
-            else
-            {
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
+        } else {
             ThrowEventNotFindException(name);
         }
     }
     #endregion
 
     #region 3 params event
-    public void RegisterAction<T, U, V>(EventName name, Action<T, U, V> callback)
-    {
-        int intName = (int)name;
+    public void RegisterAction<T, U, V>(int name, Action<T, U, V> callback) {
         Delegate action = null;
-        _events.TryGetValue(intName, out action);
-        if (action != null)
-        {
+        _events.TryGetValue(name, out action);
+        if (action != null) {
             Action<T, U, V> func = action as Action<T, U, V>;
-            if (func != null)
-            {
+            if (func != null) {
                 func += callback;
-                _events[intName] = func;
-            }
-            else
-            {
+                _events[name] = func;
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
-            _events[intName] = callback;
+        } else {
+            _events[name] = callback;
         }
     }
 
-    public void UnRegisterAction<T, U, V>(EventName name, Action<T, U, V> callback)
-    {
-        int intName = (int)name;
+    public void UnRegisterAction<T, U, V>(int name, Action<T, U, V> callback) {
         Delegate action = null;
-        _events.TryGetValue(intName, out action);
-        if (action != null)
-        {
+        _events.TryGetValue(name, out action);
+        if (action != null) {
             Action<T, U, V> func = action as Action<T, U, V>;
-            if (func != null)
-            {
+            if (func != null) {
                 func -= callback;
-                _events[intName] = func;
-            }
-            else
-            {
+                _events[name] = func;
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
+        } else {
             ThrowEventAlreadyUnRegsisteredException(name);
         }
 
     }
 
-    public void TriggerAction<T, U, V>(EventName name, T arg1, U arg2, V arg3)
-    {
-        int intName = (int)name;
+    public void TriggerAction<T, U, V>(int name, T arg1, U arg2, V arg3) {
         Delegate callback = null;
-        _events.TryGetValue(intName, out callback);
-        if (callback != null)
-        {
+        _events.TryGetValue(name, out callback);
+        if (callback != null) {
             Action<T, U, V> func = callback as Action<T, U, V>;
-            if (func != null)
-            {
+            if (func != null) {
                 func(arg1, arg2, arg3);
-            }
-            else
-            {
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
+        } else {
             ThrowEventNotFindException(name);
         }
     }
     #endregion
 
     #region 4 params event
-    public void RegisterAction<T, U, V, W>(EventName name, Action<T, U, V, W> callback)
-    {
-        int intName = (int)name;
+    public void RegisterAction<T, U, V, W>(int name, Action<T, U, V, W> callback) {
         Delegate action = null;
-        _events.TryGetValue(intName, out action);
-        if (action != null)
-        {
+        _events.TryGetValue(name, out action);
+        if (action != null) {
             Action<T, U, V, W> func = action as Action<T, U, V, W>;
-            if (func != null)
-            {
+            if (func != null) {
                 func += callback;
-                _events[intName] = func;
-            }
-            else
-            {
+                _events[name] = func;
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
-            _events[intName] = callback;
+        } else {
+            _events[name] = callback;
         }
     }
 
-    public void UnRegisterAction<T, U, V, W>(EventName name, Action<T, U, V, W> callback)
-    {
-        int intName = (int)name;
+    public void UnRegisterAction<T, U, V, W>(int name, Action<T, U, V, W> callback) {
         Delegate action = null;
-        _events.TryGetValue(intName, out action);
-        if (action != null)
-        {
+        _events.TryGetValue(name, out action);
+        if (action != null) {
             Action<T, U, V, W> func = action as Action<T, U, V, W>;
-            if (func != null)
-            {
+            if (func != null) {
                 func -= callback;
-                _events[intName] = func;
-            }
-            else
-            {
+                _events[name] = func;
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
+        } else {
             ThrowEventAlreadyUnRegsisteredException(name);
         }
 
     }
 
-    public void TriggerAction<T, U, V, W>(EventName name, T arg1, U arg2, V arg3, W arg4)
-    {
-        int intName = (int)name;
+    public void TriggerAction<T, U, V, W>(int name, T arg1, U arg2, V arg3, W arg4) {
         Delegate callback = null;
-        _events.TryGetValue(intName, out callback);
-        if (callback != null)
-        {
+        _events.TryGetValue(name, out callback);
+        if (callback != null) {
             Action<T, U, V, W> func = callback as Action<T, U, V, W>;
-            if (func != null)
-            {
+            if (func != null) {
                 func(arg1, arg2, arg3, arg4);
-            }
-            else
-            {
+            } else {
                 ThrowEventTranslationException(name);
             }
-        }
-        else
-        {
+        } else {
             ThrowEventNotFindException(name);
         }
     }
     #endregion
 
 
-    void ThrowEventAlreadyUnRegsisteredException(EventName name)
-    {
+    void ThrowEventAlreadyUnRegsisteredException(int name) {
         string log = string.Format("{0} already unregistered", name);
         Debug.LogWarning(log);
     }
 
-    void ThrowEventNotFindException(EventName name)
-    {
+    void ThrowEventNotFindException(int name) {
         Debug.LogError("Can not find event " + name);
     }
 
-    void ThrowEventTranslationException(EventName name)
-    {
+    void ThrowEventTranslationException(int name) {
         string log = string.Format("can not convert event {0} to correct callck,please check event name and params type ", name);
         Debug.LogError(log);
     }
 
-    public void Clear()
-    {
+    public void Clear() {
         _events.Clear();
     }
 }
