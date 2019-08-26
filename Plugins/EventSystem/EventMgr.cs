@@ -20,7 +20,6 @@ public class EventMgr {
         } else {
             _events[name] = callback;
         }
-
     }
 
     public void UnRegisterAction(int name, Action callback) {
