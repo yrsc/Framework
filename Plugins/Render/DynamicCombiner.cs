@@ -33,7 +33,7 @@ public static class DynamicCombiner
                 sharedShader = shader;
                 newMat = new Material(shader);
 #if UNITY_ANDROID
-                newTex = new Texture2D(512, 512, TextureFormat.DXT1, true);
+                newTex = new Texture2D(512, 512, TextureFormat.ETC_RGB4, true);
 #elif UNITY_IPHONE
                 newTex = new Texture2D(512, 512, TextureFormat.PVRTC_RGBA4, true);
 #elif UNITY_EDITOR
